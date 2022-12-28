@@ -85,7 +85,6 @@ cd maldetect-1.6.4
 ./install.sh
 ```
 
-###```
 ```
 cd maldetect-1.6.4
 ```
@@ -142,6 +141,7 @@ scan_clamscan="1"
 
 # Enable scanning for root-owned files. Set 1 to disable.
 scan_ignore_root="0"
+
 ```
 
 ### Updating Maldet
@@ -262,7 +262,6 @@ cd maldetect-1.6.4
 ./install.sh
 ```
 
-###```
 ```
 cd maldetect-1.6.4
 ```
@@ -382,9 +381,6 @@ cd rkhunter-1.4.0
 cd
 ```
 
-
-
-
 ### Maldet ( Malware Detect)
 
 ```
@@ -392,21 +388,97 @@ sudo zypper install -n wget
 ```
 
 ```
-cd /tmp
+cd /tmp/
 ```
+
 ```
 wget http://www.rfxn.com/downloads/maldetect-current.tar.gz
 ```
+
 ```
-xfz maldetect-current.tar.gz
+tar xfz maldetect-current.tar.gz
 ```
 ```
 cd maldetect-1.6.4
 ```
 ```
-./install
+./install.sh
 ```
+
 ```
-cd
+cd maldetect-1.6.4
 ```
+
+### Configuring Maldet
+
+```
+sudo vi /usr/local/maldetect/conf.maldet
+```
+ 
+find the following lines and edit them to as below
+
+
+
+```
+# To enable the email notification.
+email_alert="1"
+
+# Specify the email address on which you want to receive an email notification.
+email_addr="user@domain.com"
+
+# Enable the LMD signature autoupdate.
+autoupdate_signatures="1"
+
+# Enable the automatic updates of the LMD installation.
+autoupdate_version="1"
+
+# Enable the daily automatic scanning.
+cron_daily_scan="1"
+
+# Allows non-root users to perform scans.
+scan_user_access="1"
+ 
+# Move hits to quarantine & alert
+quarantine_hits="1"
+
+# Clean string based malware injections.
+quarantine_clean="0"
+
+# Suspend user if malware found. 
+quarantine_suspend_user="1"
+
+# Minimum userid value that be suspended
+quarantine_suspend_user_minuid="500"
+
+# Enable Email Alerting
+email_alert="1"
+
+# Email Address in which you want to receive scan reports
+email_addr="you@domain.com"
+
+# Use with ClamAV
+scan_clamscan="1"
+
+# Enable scanning for root-owned files. Set 1 to disable.
+scan_ignore_root="0"
+
+```
+
+### Updating Maldet
+
+First run the following command to create the correct paths for the logged-in user; you may have issues updating without doing this.
+
+
+```
+sudo /usr/local/sbin/maldet --mkpubpaths
+```
+
+To update the Maldet virus definitions database, execute the following command:
+
+```
+maldet -u
+```
+
+
+
 
