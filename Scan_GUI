@@ -7,7 +7,7 @@ clam_status(){
 	clamav_db=`sudo systemctl status clamav-freshclam`
 
 	zenity --list \
-		--column "Openssh Server Status" \
+		--column "ClamAV and FreshClam Status" \
 		 --width 900 \
 		 --height 500 \
 		 "$clamav"  \ 
@@ -18,7 +18,7 @@ menu
 }
 
 
-scan_local(){
+scan(){
 
 	# Scan With clamAV
 	
@@ -35,38 +35,18 @@ scan_local(){
 	maldet -a /
 
 
-}
-
-
-
-
-scan_remote(){
-
-
-
-	# Scan With clamAV
-	
-
-	ssh -t $user@$ip  sudo clamscan --infected --recursive --remove /
-
-
-	# Scan Rootkits with RKhunetr
-	
-	ssh -t $user@$ip sudo rkhunter -c
-
-	# Maldet
-
-	 ssh -t $user@$ip maldet -a /
-
-
-
+menu
 
 }
 
 
 
 
-updatelocal(){
+
+
+
+
+update(){
 
 		# clamAV
 		sudo freshclam
@@ -80,49 +60,30 @@ updatelocal(){
 
 		# Malware Detect
 		sudo /usr/local/sbin/maldet --mkpubpaths
+
+
+
+menu
 }
 
 
-update_remote(){
-
-		# clamAV
-		ssh -t $user@$ip sudo freshclam
-
-	
-		# RKhunter
-		ssh -t $user@$ip /usr/local/bin/rkhunter --update 
-		ssh -t $user@$ip /usr/local/bin/rkhunter --propupd
-
-
-
-		# Malware Detect
-		ssh -t $user@$ip sudo /usr/local/sbin/maldet --mkpubpaths
-
-
-
-
-}
 
 
 menu(){
 	choice=`zenity --info --title 'KYGnus' \
 		--text 'KYGnus Scan System' \
 		--ok-label OK \
-		--extra-button ScanLocal \
-		--extra-button ScanRemote \
-		--extra-button UpdateLocal \
-		--extra-button UpdateRemote \
+		--extra-button Scan \
+		--extra-button Update \
 		--extra-button Status \
 		--extra-button Exit \
-		--width 600 \
+		--width 400 \
 		--height 100`
 
-	if [ "$choice" == ScanLocal ];then
-		scan_local
-	elif [ "$choice" == ScanRemote ];then
-		scan_remote
-	elif [ "$choice" == UpdateLocal ];then
-		update_local
+	if [ "$choice" == Scan ];then
+		scan
+	elif [ "$choice" == Update ];then
+		update
 	elif [ "$choice" == Exit ];then
 		exit 0
 	elif [ "$choice" == UpdateRemote ];then
