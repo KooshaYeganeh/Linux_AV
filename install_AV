@@ -1,0 +1,244 @@
+#!/bin/bash
+
+# This script is written for easy installation of certain software on Ubuntu, Fedora and Suse distributions.
+
+
+antivirus(){
+
+
+	ubuntu=`cat /etc/os-release | grep -o 'ubuntu' | head -1`
+	fedora=`cat /etc/os-release | grep -o 'fedora' | head -1`
+	suse=`cat /etc/os-release | grep -o 'opensuse' | head -1`
+
+
+
+	if [ "$ubuntu" == "ubuntu" ];then
+		# ClamAV
+		sudo apt update 
+		sudo apt install clamav clamav-daemon -y
+		echo "(1/4) .......... clamAV installed"
+		sudo systemctl stop clamav-freshclam
+		sudo freshclam
+		echo "Did an error occur while updating the database? (y/n)"
+		read upresponse
+		if [ "$upresponse" == y ] || [ "$upresponse" == Y ];then
+			cd /tmp
+			wget  https://database.clamav.net/daily.cvd
+			sudo mkdir /var/lib/clamav
+			mv daily.cvd /var/lib/clamav/daily.cvd
+			cd
+			sudo systemctl start clamav-freshclam
+		else
+			true
+		fi
+		sudo systemctl start clamav-freshclam
+		echo "(2/4) .......... clamAV Dabase Updated"
+
+		# RKHunter
+		sudo apt install rkhunter -y
+		echo "(3/4) .......... Rootlit Hunter Installed"
+		# Maldet ( Malware Detect )
+		## Maldet installlations 
+		sudo apt update 
+		sudo apt install wget -y
+		cd /tmp/ 
+		wget http://www.rfxn.com/downloads/maldetect-current.tar.gz
+		tar xfz maldetect-current.tar.gz
+		cd maldetect-1.6.4
+		./install.sh
+		cd
+		echo "(4/4) .......... Maldet installed"
+		
+		## Create config File for Maldet
+		sudo echo -e """# To enable the email notification.\n
+		email_alert='1'\n\n
+		# Specify the email address on which you want to receive an email notification. \n
+		email_addr='user@domain.com'\n\n
+		# Enable the LMD signature autoupdate.\n
+		autoupdate_version='1'\n\n
+		# Enable the daily automatic scanning.\n
+		cron_daily_scan='1'\n\n
+		# Allows non-root users to perform scans.\n
+		scan_user_access='1'\n\n
+		# Move hits to quarantine & alert\n
+		quarantine_hits='1'\n\n
+		# Clean string based malware injections.\n
+		quarantine_clean='0'\n\n
+		# Suspend user if malware found.\n
+		quarantine_suspend_user='1'\n\n
+		# Minimum userid value that be suspended\n
+		quarantine_suspend_user_minuid='500'\n\n
+		# Enable Email Alerting\n
+		email_alert='1'\n\n
+		# Email Address in which you want to receive scan reports\n
+		email_addr='you@domain.com'\n\n
+		# Use with ClamAV\n
+		scan_clamscan='1'\n\n
+		# Enable scanning for root-owned files. Set 1 to disable.\n
+		scan_ignore_root='0'\n\n
+	
+		""" > /usr/local/maldetect/conf.maldet
+
+		echo "All Antivirus packages Installed and Confugures"
+		
+
+	elif [ "$fedora" == "fedora" ];then
+		sudo dnf upgrade --refresh
+		sudo dnf install clamav clamd clamav-update -y
+		echo "(1/4) .......... clamAV installed"
+		sudo freshclam
+		echo "Did an error occur while updating the database? (y/n)"
+		read upresponse
+		if [ "$upresponse" == y ] || [ "$upresponse" == Y ];then
+			cd /tmp
+			wget  https://database.clamav.net/daily.cvd
+			sudo mkdir /var/lib/clamav
+			mv daily.cvd /var/lib/clamav/daily.cvd
+			cd
+			sudo systemctl start clamav-freshclam
+		else
+			true
+		fi
+
+		sudo systemctl enable --now clamav-freshclam 
+		echo "(2/4) .......... ClamAV Database Updated"
+
+		#RKhunetr
+		cd /tmp
+		wget https://pilotfiber.dl.sourceforge.net/project/rkhunter/rkhunter/1.4.6/rkhunter-1.4.6.tar.gz
+		tar xvf rkhunter-1.4.0.tar.gz
+		cd rkhunter-1.4.0
+		./installer.sh –layout default –install
+		/usr/local/bin/rkhunter –update
+		/usr/local/bin/rkhunter –propupd
+		cd
+
+		echo "(3/4) .......... RKHunter Installed"
+
+		# Maldet ( Malware Detect )
+		## Maldet installlations 
+		sudo apt install dnf -y
+		cd /tmp/ 
+		wget http://www.rfxn.com/downloads/maldetect-current.tar.gz
+		tar xfz maldetect-current.tar.gz
+		cd maldetect-1.6.4
+		./install.sh
+		cd
+		
+		## Create config File for Maldet
+		sudo echo -e """# To enable the email notification.\n
+		email_alert='1'\n\n
+		# Specify the email address on which you want to receive an email notification. \n
+		email_addr='user@domain.com'\n\n
+		# Enable the LMD signature autoupdate.\n
+		autoupdate_version='1'\n\n
+		# Enable the daily automatic scanning.\n
+		cron_daily_scan='1'\n\n
+		# Allows non-root users to perform scans.\n
+		scan_user_access='1'\n\n
+		# Move hits to quarantine & alert\n
+		quarantine_hits='1'\n\n
+		# Clean string based malware injections.\n
+		quarantine_clean='0'\n\n
+		# Suspend user if malware found.\n
+		quarantine_suspend_user='1'\n\n
+		# Minimum userid value that be suspended\n
+		quarantine_suspend_user_minuid='500'\n\n
+		# Enable Email Alerting\n
+		email_alert='1'\n\n
+		# Email Address in which you want to receive scan reports\n
+		email_addr='you@domain.com'\n\n
+		# Use with ClamAV\n
+		scan_clamscan='1'\n\n
+		# Enable scanning for root-owned files. Set 1 to disable.\n
+		scan_ignore_root='0'\n\n
+	
+		""" > /usr/local/maldetect/conf.maldet
+		
+		echo "(4/4) .......... Maldet Installed."
+
+	elif [ "$suse" == "suse" ];then
+		# clamAV
+		sudo zypper install pcre-devel clamav clamav-database clamav-nodb clamz
+		echo "(1/4) .......... clamAV Installed"
+		sudo systemctl  stop freshcalam
+		sudo freshclam
+		echo "Did an error occur while updating the database? (y/n)"
+		read upresponse
+		if [ "$upresponse" == y ] || [ "$upresponse" == Y ];then
+			cd /tmp
+			wget  https://database.clamav.net/daily.cvd
+			sudo mkdir /var/lib/clamav
+			mv daily.cvd /var/lib/clamav/daily.cvd
+			cd
+			sudo systemctl start clamav-freshclam
+		else
+			true
+		fi
+
+		echo "(2/4) .......... clamAV Updated "
+		#RKhunetr
+		cd /tmp
+		wget https://pilotfiber.dl.sourceforge.net/project/rkhunter/rkhunter/1.4.6/rkhunter-1.4.6.tar.gz
+		tar xvf rkhunter-1.4.0.tar.gz
+		cd rkhunter-1.4.0
+		./installer.sh –layout default –install
+		/usr/local/bin/rkhunter –update
+		/usr/local/bin/rkhunter –propupd
+		cd
+
+		echo "(3/4) .......... RKHunter Installed "
+
+		# Maldet ( Malware Detect )
+		## Maldet installlations 
+		sudo zypper install -n wget 
+		cd /tmp/ 
+		wget http://www.rfxn.com/downloads/maldetect-current.tar.gz
+		tar xfz maldetect-current.tar.gz
+		cd maldetect-1.6.4
+		./install.sh
+		cd
+
+		
+		## Create config File for Maldet
+		echo -e """# To enable the email notification.\n
+		email_alert='1'\n\n
+		# Specify the email address on which you want to receive an email notification. \n
+		email_addr='user@domain.com'\n\n
+		# Enable the LMD signature autoupdate.\n
+		autoupdate_version='1'\n\n
+		# Enable the daily automatic scanning.\n
+		cron_daily_scan='1'\n\n
+		# Allows non-root users to perform scans.\n
+		scan_user_access='1'\n\n
+		# Move hits to quarantine & alert\n
+		quarantine_hits='1'\n\n
+		# Clean string based malware injections.\n
+		quarantine_clean='0'\n\n
+		# Suspend user if malware found.\n
+		quarantine_suspend_user='1'\n\n
+		# Minimum userid value that be suspended\n
+		quarantine_suspend_user_minuid='500'\n\n
+		# Enable Email Alerting\n
+		email_alert='1'\n\n
+		# Email Address in which you want to receive scan reports\n
+		email_addr='you@domain.com'\n\n
+		# Use with ClamAV\n
+		scan_clamscan='1'\n\n
+		# Enable scanning for root-owned files. Set 1 to disable.\n
+		scan_ignore_root='0'\n\n
+	
+		""" > /usr/local/maldetect/conf.maldet
+
+		echo "(4/4) .......... maldet Installed"
+
+	else
+		echo "Can Not Detetct OS or Your Distribution Not Supported Now"
+
+	fi
+
+}
+
+
+
+antivirus
