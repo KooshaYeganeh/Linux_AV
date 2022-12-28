@@ -352,6 +352,26 @@ sudo zypper install pcre-devel clamav clamav-database clamav-nodb clamz
 sudo freshclam
 ```
 
+**ٔImportant Note : If an error occurs while updating the signatures, you can download the database separately and place it in your specified path.**
+
+
+```
+wget  https://database.clamav.net/daily.cvd
+```
+
+``` 
+sudo mkdir /var/lib/clamav
+```
+
+```
+mv daily.cvd /var/lib/clamav/daily.cvd
+```
+
+```
+sudo systemctl start clamav-freshclam
+```
+
+
 
 ### RKhunter
 
