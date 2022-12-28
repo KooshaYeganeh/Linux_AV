@@ -117,7 +117,7 @@ antivirus(){
 
 		# Maldet ( Malware Detect )
 		## Maldet installlations 
-		sudo apt install dnf -y
+		sudo dnf install wget -y
 		cd /tmp/ 
 		wget http://www.rfxn.com/downloads/maldetect-current.tar.gz
 		tar xfz maldetect-current.tar.gz
