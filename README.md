@@ -3,6 +3,46 @@ Explanations on how to install antivirus and firewall packages on popular Linux 
 and related projects along with a small project to scan your own server or system for beginners (because it has GUI)
 
 
+**In addition to the mentioned content, there are two projects in this repository**
+**1-install_AV : This Script Try to Install clamAV and Malware Detect and RootKitHunter Automatically.This script is mostly written for new and novice users because professional users are more interested in doing the steps themselves and customizing the settings more. **
+
+**2-Scan_GUI : A Script with GUI to Scan and Update and Status simultaneously with all three tools with just one click**
+
+
+
+## Scan_GUI
+
+
+### Install
+
+```
+cd /tmp && wget  https://github.com/KooshaYeganeh/Linux_AV/archive/refs/heads/main.zip && unzip main.zip && cd Linux_AV-main && sudo mv Scan_GUI /usr/bin && cd 
+```
+
+### Run
+
+Just Open Your Terminal and Type :
+
+```
+Scan_GUI
+```
+
+
+## install_AV
+
+```
+cd /tmp && wget https://github.com/KooshaYeganeh/Linux_AV/archive/refs/heads/main.zip && unzip main.zip && cd Linux_AV-main
+```
+
+Execute install_AV command with sudo to Install clamAV and RootkitHunter and MalwareDetetct:
+
+```
+sudo ./install_AV
+```
+
+
+
+
 
 ## Ubuntu
 
@@ -499,6 +539,51 @@ To update the Maldet virus definitions database, execute the following command:
 maldet -u
 ```
 
+
+
+## Run
+
+### ClamAV
+
+scan your whole system by running the following command in the terminal:
+
+```
+sudo clamscan --infected --recursive --remove /
+```
+
+Scaning directory : 
+
+```
+sudo clamscan --infected --remove --recursive /home/koosha/Desktop
+```
+
+### Rootkithunter
+
+```
+rkhunter -c
+```
+
+
+### MalwareDetect
+
+Scan whole system : 
+
+```
+maldet -a /
+```
+
+From the result, you will get the scan report ID :
+For Example report of 051013-1142.20920 :
+
+```
+maldet --report 051013-1142.20920
+```
+
+You can put the infected files to quarantine by running the below command.
+
+```
+maldet -q 051013-1142.20920
+```
 
 
 
