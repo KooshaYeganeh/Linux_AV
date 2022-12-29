@@ -86,8 +86,6 @@ menu(){
 		update
 	elif [ "$choice" == Exit ];then
 		exit 0
-	elif [ "$choice" == UpdateRemote ];then
-		update_remote
 	elif [ "$choice" == Status ];then
 		clam_status
 	else
