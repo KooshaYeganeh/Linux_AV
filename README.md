@@ -89,7 +89,7 @@ cd maldetect-1.6.4
 cd maldetect-1.6.4
 ```
 
-### Configuring Maldet
+#### Configuring Maldet
 
 ```
 sudo vi /usr/local/maldetect/conf.maldet
@@ -144,7 +144,7 @@ scan_ignore_root="0"
 
 ```
 
-### Updating Maldet
+#### Updating Maldet
 
 First run the following command to create the correct paths for the logged-in user; you may have issues updating without doing this.
 
@@ -266,7 +266,7 @@ cd maldetect-1.6.4
 cd maldetect-1.6.4
 ```
 
-### Configuring Maldet
+#### Configuring Maldet
 
 ```
 sudo vi /usr/local/maldetect/conf.maldet
@@ -320,7 +320,7 @@ scan_clamscan="1"
 scan_ignore_root="0"
 ```
 
-### Updating Maldet
+#### Updating Maldet
 
 First run the following command to create the correct paths for the logged-in user; you may have issues updating without doing this.
 
@@ -401,7 +401,7 @@ cd rkhunter-1.4.0
 cd
 ```
 
-### Maldet ( Malware Detect)
+#### Maldet ( Malware Detect)
 
 ```
 sudo zypper install -n wget
@@ -429,7 +429,7 @@ cd maldetect-1.6.4
 cd maldetect-1.6.4
 ```
 
-### Configuring Maldet
+#### Configuring Maldet
 
 ```
 sudo vi /usr/local/maldetect/conf.maldet
@@ -484,7 +484,7 @@ scan_ignore_root="0"
 
 ```
 
-### Updating Maldet
+#### Updating Maldet
 
 First run the following command to create the correct paths for the logged-in user; you may have issues updating without doing this.
 
