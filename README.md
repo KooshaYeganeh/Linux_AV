@@ -47,8 +47,8 @@ sudo ./install_AV
 
 
 
-![clamAV](./clamav_Logo.png)
-![ubuntu](./ubuntu.png)
+![clamAV](./images/clamav_Logo.png)
+![ubuntu](./images/ubuntu.png)
 
 ## Ubuntu
 
@@ -208,8 +208,8 @@ maldet -u
 
 
 
-![clamAV](./clamav_Logo.png)
-![ubuntu](./fedora.png)
+![clamAV](./images/clamav_Logo.png)
+![ubuntu](./images/fedora.png)
 
 
 
@@ -386,8 +386,8 @@ maldet -u
 
 
 
-![clamAV](./clamav_Logo.png)
-![ubuntu](./suse.png)
+![clamAV](./images/clamav_Logo.png)
+![ubuntu](./images/suse.png)
 
 
 
