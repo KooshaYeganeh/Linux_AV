@@ -3,7 +3,8 @@ Explanations on how to install antivirus and firewall packages on popular Linux 
 and related projects along with a small project to scan your own server or system for beginners (because it has GUI)
 
 
-**In addition to the mentioned content, there are two projects in this repository**
+**In addition to the mentioned content, there are two projects in this repository**  
+
 **1-install_AV : This Script Try to Install clamAV and Malware Detect and RootKitHunter Automatically.This script is mostly written for new and novice users because professional users are more interested in doing the steps themselves and customizing the settings more. **
 
 **2-Scan_GUI : A Script with GUI to Scan and Update and Status simultaneously with all three tools with just one click**
@@ -14,6 +15,8 @@ and related projects along with a small project to scan your own server or syste
 
 
 ### Install
+
+install Scan_GUI in Open Step:
 
 ```
 cd /tmp && wget  https://github.com/KooshaYeganeh/Linux_AV/archive/refs/heads/main.zip && unzip main.zip && cd Linux_AV-main && sudo mv Scan_GUI /usr/bin && cd 
@@ -30,6 +33,8 @@ Scan_GUI
 
 ## install_AV
 
+> I recommend users who are a little familiar with Linux to do the installation steps one by one or if they want to use the installation script, apply their changes before running.
+
 ```
 cd /tmp && wget https://github.com/KooshaYeganeh/Linux_AV/archive/refs/heads/main.zip && unzip main.zip && cd Linux_AV-main
 ```
@@ -43,6 +48,7 @@ sudo ./install_AV
 
 
 ![clamAV](./clamav_Logo.png)
+![ubuntu](./ubuntu.png)
 
 ## Ubuntu
 
@@ -201,6 +207,9 @@ maldet -u
 
 
 
+
+![clamAV](./clamav_Logo.png)
+![ubuntu](./fedora.png)
 
 
 
@@ -376,6 +385,9 @@ maldet -u
 ```
 
 
+
+![clamAV](./clamav_Logo.png)
+![ubuntu](./suse.png)
 
 
 
